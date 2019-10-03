@@ -1,20 +1,20 @@
-import { Planet } from "../models/planetas/planet.model";
-import { Contract } from "./contract";
-import { Flunt } from "src/utils/flunt";
 import { Injectable } from "@nestjs/common";
+import { Planet } from "../models/planets/planet.model";
+import { Contract } from "./contract";
+import { Flunt } from "../../utils/flunt";
 
 @Injectable()
 export class CreatePlanetContract implements Contract {
-  erros: any[];
+  errors: any[];
 
   validate(model: Planet): boolean {
     const flunt = new Flunt();
 
-    flunt.isNotNull(model.name, 'Name is Invalid');
-    flunt.isNotNull(model.climate, 'Climate is Invalid');
-    flunt.isNotNull(model.ground, 'Ground is invalid');
+    flunt.isNotEmpty(model.name, 'Name is Invalid');
+    flunt.isNotEmpty(model.climate, 'Climate is Invalid');
+    flunt.isNotEmpty(model.ground, 'Ground is invalid');
 
-    this.erros = flunt.errors;
+    this.errors = flunt.errors;
 
     return flunt.isValid();
   }

@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
-import { Planet } from '../../models/planetas/planet.model';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseInterceptors } from '@nestjs/common';
+import { Planet } from '../../models/planets/planet.model';
 import { Result } from '../../models/result.model';
+import { ValidatorInterceptor } from '../../../interceptors/validator.interceptor';
+import { CreatePlanetContract } from '../../../backoffice/contracts/planet.contract';
 
-@Controller('v1/planetas')
+
+@Controller('v1/planets')
 export class PlanetsController {
 
   @Get()
@@ -15,12 +18,13 @@ export class PlanetsController {
     return new Result(null, true, {}, null);
   }
 
-  // @Get(':nome')
-  // buscaPorNome(@Param('nome') nome) {
-  //   return 'Obter Planeta ' + nome;
-  // }
+  //  @Get('?name:planetName')
+  //  getByName(@Param('planetName') document: string) {
+  //   return new Result(null, true,  document, null);
+  //  }
 
   @Post()
+  @UseInterceptors(new ValidatorInterceptor(new CreatePlanetContract()))
   criar(@Body() body: Planet) {
     return new Result('Planeta incluído com sucesso', true, body, null);
   }

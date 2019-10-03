@@ -1,7 +1,9 @@
 import { Planet } from "../models/planetas/planet.model";
 import { Contract } from "./contract";
 import { Flunt } from "src/utils/flunt";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class CreatePlanetContract implements Contract {
   erros: any[];
 

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { BackofficeModule } from './backoffice/backoffice.module';
-import { PlanetasController } from './backoffice/controllers/planetas/planetas.controller';
+import { PlanetsController } from './backoffice/controllers/planets/planets.controller';
 
 @Module({
   imports: [BackofficeModule],
-  controllers: [PlanetasController],
+  controllers: [PlanetsController],
   providers: [],
 })
 export class AppModule {}

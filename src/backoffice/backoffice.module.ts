@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { PlanetasController } from './controllers/planetas/planetas.controller';
+import { PlanetsController } from './controllers/planets/planets.controller';
 
 @Module({
-  controllers: [PlanetasController]
+  controllers: [PlanetsController],
 })
 export class BackofficeModule {}

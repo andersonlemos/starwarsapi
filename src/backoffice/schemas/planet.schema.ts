@@ -19,5 +19,9 @@ export const PlanetSchema = new mongoose.Schema ({
     required: true,
     trim: true,
   },
-  moviesWhereItAppears: [],
+  moviesAppearances: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
 });

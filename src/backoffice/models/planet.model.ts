@@ -3,6 +3,6 @@ export class Planet {
       public name: string,
       public climate: string,
       public ground: string,
-      public moviesWhereItAppears: [],
+      public moviesAppearances: number,
     ) {}
 }

@@ -4,7 +4,8 @@ import { PlanetsController } from './controllers/planets.controller';
 import { PlanetSchema } from './schemas/planet.schema';
 import { UserSchema } from './schemas/user.schema';
 import { UsersController } from './controllers/users.controller';
-import { AccountService } from './services/account.service';
+import { UserService } from './services/user.service';
+import { PlanetService } from './services/planet.service';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -23,7 +24,8 @@ import { AccountService } from './services/account.service';
     UsersController,
   ],
   providers: [
-    AccountService,
-  ]
+    UserService,
+    PlanetService,
+  ],
 })
 export class BackofficeModule {}

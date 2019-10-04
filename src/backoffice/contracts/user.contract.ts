@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { Contract } from "./contract";
-import { Flunt } from "../../utils/flunt";
-import { CreateUserDto } from "../dtos/create-user-dto";
+import { Injectable } from '@nestjs/common';
+import { Contract } from './contract';
+import { Flunt } from '../../utils/flunt';
+import { CreateUserDto } from '../dtos/create-user-dto';
 
 @Injectable()
 export class CreateUserContract implements Contract {
@@ -15,7 +15,7 @@ export class CreateUserContract implements Contract {
     flunt.hasMinLen(model.password, 6, 'Password must be at least 6 characteres ');
     flunt.isRequired(model.active, 'Active must be true or false');
 
-    // this.errors = flunt.errors;
+    this.errors = flunt.errors;
 
     return flunt.isValid();
   }

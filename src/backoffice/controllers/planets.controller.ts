@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, UseInterceptors } from '@nestjs/common';
-import { Planet } from '../../models/planets/planet.model';
-import { Result } from '../../models/result.model';
-import { ValidatorInterceptor } from '../../../interceptors/validator.interceptor';
-import { CreatePlanetContract } from '../../../backoffice/contracts/planet.contract';
+import { Planet } from '../models/planet.model';
+import { Result } from '../models/result.model';
+import { ValidatorInterceptor } from '../../interceptors/validator.interceptor';
+import { CreatePlanetContract } from '../contracts/planet.contract';
 
 
 @Controller('v1/planets')

@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Planet } from '../models/planet.model';
-
+import { QueryDto } from '../dtos/query.dto';
 @Injectable()
 export class PlanetService {
   constructor(@InjectModel('Planet') private readonly model: Model<Planet>) {}
@@ -35,4 +35,18 @@ export class PlanetService {
                      .remove({_id: document})
                      .exec();
   }
+
+  async query(model: QueryDto): Promise<Planet[]> {
+    return await this.model
+                     .find(model.query,
+                      model.fields,
+                      {
+                        skip: model.skip,
+                        limit: model.take,
+                      })
+                     .sort(model.sort)
+                     .exec();
+
+  }
+
 }

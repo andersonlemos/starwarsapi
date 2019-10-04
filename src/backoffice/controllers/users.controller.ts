@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, UseInterceptors, HttpException, HttpStatus } from '@nestjs/common';
 import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../../interceptors/validator.interceptor';
-import { CreateUserDto } from '../dtos/create-user-dto';
+import { CreateUserDto } from '../dtos/create-user.dto';
 import { CreateUserContract } from '../contracts/user.contract';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';

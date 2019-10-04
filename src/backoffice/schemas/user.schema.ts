@@ -19,5 +19,5 @@ export const UserSchema = new mongoose.Schema({
     required: true,
     default: true,
   },
-  roles: [],
+  roles: [{type: String}],
 });

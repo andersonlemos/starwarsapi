@@ -1,16 +1,14 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, UseInterceptors } from '@nestjs/common';
-import { Planet } from '../models/planet.model';
 import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../../interceptors/validator.interceptor';
 import { CreatePlanetContract } from '../contracts/planet.contract';
-
-
+import { CreatePlanetDto } from '../dtos/create-planet-dto';
 @Controller('v1/planets')
 export class PlanetsController {
 
   @Get()
   get() {
-    return new Result(null, true, [], null);;
+    return new Result(null, true, [], null);
   }
 
   @Get(':document')
@@ -18,25 +16,20 @@ export class PlanetsController {
     return new Result(null, true, {}, null);
   }
 
-  //  @Get('?name:planetName')
-  //  getByName(@Param('planetName') document: string) {
-  //   return new Result(null, true,  document, null);
-  //  }
+  @Get('/find/:document')
+  getByName(@Param('document') document: string) {
+    return new Result(null, true, {}, null);
+  }
 
   @Post()
   @UseInterceptors(new ValidatorInterceptor(new CreatePlanetContract()))
-  criar(@Body() body: Planet) {
-    return new Result('Planeta incluído com sucesso', true, body, null);
-  }
-
-  @Put(':document')
-  alterar(@Param('document') document, @Body() body: Planet) {
-    return new Result('Planeta Atualizado com sucesso', true, document, null);
+  post(@Body() body: CreatePlanetDto) {
+    return new Result('Planet successfully added!', true, body, null);
   }
 
   @Delete(':document')
-  remover(@Param('document') document: string) {
-    return new Result('Planeta Removido com sucesso', true, document, null);
+  delete(@Param('document') document: string) {
+    return new Result('Planet successfully removed!', true, document, null);
   }
 
 }

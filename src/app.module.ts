@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { BackofficeModule } from './backoffice/backoffice.module';
-import { PlanetsController } from './backoffice/controllers/planets.controller';
 
 @Module({
-  imports: [BackofficeModule],
-  controllers: [PlanetsController],
+  imports: [
+    MongooseModule.forRoot('mongodb://localhost/starwarsapi'),
+    BackofficeModule,
+  ],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}

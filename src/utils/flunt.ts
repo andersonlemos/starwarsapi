@@ -43,11 +43,7 @@ export class Flunt {
           this.errors.push(message);
       }
   }
-  isNotEmpty = (value, message) => {
-    if (!value) {
-        this.errors.push(message);
-    }
-  }
+
   clear() {
       this.errors = [];
   }

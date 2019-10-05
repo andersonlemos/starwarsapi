@@ -3,25 +3,25 @@ import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../../interceptors/validator.interceptor';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { CreateUserContract } from '../contracts/user.contract';
-import { UserService } from '../services/user.service';
+import { AccountService } from '../services/account.service';
 import { User } from '../models/user.model';
 
 @Controller('v1/users')
-export class UsersController {
+export class UserController {
 
-  constructor(private readonly userService: UserService) {
+  constructor(private readonly accountService: AccountService) {
 
   }
 
   @Get(':document')
   async getById(@Param('document') document: string) {
-    const user = await this.userService.findById(document);
+    const user = await this.accountService.findById(document);
     return new Result(null, true, user, null);
   }
 
   @Get('/find/:name')
   async getByName(@Param('name') name: string) {
-    const user = await this.userService.findByName(name);
+    const user = await this.accountService.findByName(name);
     return new Result(null, true, user, null);
   }
 
@@ -30,7 +30,7 @@ export class UsersController {
   async post(@Body() model: CreateUserDto) {
     try {
 
-      const user = await this.userService
+      const user = await this.accountService
                            .create(
                               new User(
                                 model.username,
@@ -57,7 +57,7 @@ export class UsersController {
   async delete(@Param('document') document: string) {
     try {
 
-      const user = await this.userService.remove(document);
+      const user = await this.accountService.remove(document);
       return new Result('User successfully removed!', true, user, null);
 
     } catch (error) {

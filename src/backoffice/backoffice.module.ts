@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PlanetsController } from './controllers/planets.controller';
+import { PlanetController } from './controllers/planet.controller';
 import { PlanetSchema } from './schemas/planet.schema';
 import { UserSchema } from './schemas/user.schema';
-import { UsersController } from './controllers/users.controller';
-import { UserService } from './services/user.service';
+import { UserController } from './controllers/user.controller';
+import { AccountService } from './services/account.service';
 import { PlanetService } from './services/planet.service';
 @Module({
   imports: [
@@ -20,11 +20,11 @@ import { PlanetService } from './services/planet.service';
     ]),
   ],
   controllers: [
-    PlanetsController,
-    UsersController,
+    PlanetController,
+    UserController,
   ],
   providers: [
-    UserService,
+    AccountService,
     PlanetService,
   ],
 })

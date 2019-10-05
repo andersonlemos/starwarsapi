@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from '../models/user.model';
 
 @Injectable()
-export class UserService {
+export class AccountService {
   constructor(@InjectModel('User') private readonly model: Model<User>) {}
 
   async create(data: User): Promise<User> {

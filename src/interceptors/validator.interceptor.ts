@@ -1,7 +1,7 @@
 import { NestInterceptor, ExecutionContext, Injectable, CallHandler, HttpStatus, HttpException } from "@nestjs/common";
-import { Observable } from "rxjs";
-import { Contract } from "../backoffice/contracts/contract";
-import { Result } from "../backoffice/models/result.model";
+import { Observable } from 'rxjs';
+import { Contract } from '../backoffice/contracts/contract';
+import { Result } from '../backoffice/models/result.model';
 
 
 @Injectable()

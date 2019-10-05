@@ -10,8 +10,9 @@ import { CreatePlanetDto } from '../dtos/create-planet.dto';
 import { PlanetService } from '../services/planet.service';
 import { Planet } from '../models/planet.model';
 import { QueryDto } from '../dtos/query.dto';
+import { QueryContract } from '../contracts/query.contract';
 @Controller('v1/planets')
-export class PlanetsController {
+export class PlanetController {
 
   constructor(private readonly planetService: PlanetService) {
 

@@ -1,4 +1,8 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseInterceptors, HttpException, HttpStatus, Query } from '@nestjs/common';
+import { Controller,
+         Get, Post, Put, Delete,
+         Param, Body, UseInterceptors,
+         HttpException, HttpStatus,
+         Query } from '@nestjs/common';
 import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../../interceptors/validator.interceptor';
 import { CreatePlanetContract } from '../contracts/planet.contract';
@@ -14,16 +18,11 @@ export class PlanetsController {
   }
 
   @Get()
-  async get() {
-    const planets = await this.planetService.findAll();
-    return new Result(null, true, planets, null);
+  async get(@Query() options: QueryDto) {
+      const planets = await this.planetService.query(options);
+      return new Result(null, true,  planets, null);
   }
-  @Get('')
-  async getByQuery(@Query('skip') skip , @Query('take') take, @Query('sort') sort) {
-    const document = new QueryDto(null, null,sort, skip, take);
-    const planet = await this.planetService.query(document);
-    return new Result(null, true, document, null);
-  }
+
   @Get(':document')
   async getById(@Param('document') document: string) {
     const planet = await this.planetService.findById(document);
@@ -39,15 +38,25 @@ export class PlanetsController {
   @Post()
   @UseInterceptors(new ValidatorInterceptor(new CreatePlanetContract()))
   async post(@Body() model: CreatePlanetDto) {
-    const planet = await this.planetService
-                            .create(
-                              new Planet(
-                                model.name,
-                                model.climate,
-                                model.ground,
-                                model.moviesAppearances,
-                               ));
-    return new Result('Planet successfully added!', true, planet, null);
+    try {
+      const planet = await this.planetService
+                              .create(
+                                new Planet(
+                                  model.name,
+                                  model.climate,
+                                  model.ground,
+                                  model.moviesAppearances,
+                                ));
+      return new Result('Planet successfully added!', true, planet, null);
+  } catch (error) {
+    return new HttpException(
+       new Result('User could not be added',
+                            false,
+                            null,
+                            error),
+           HttpStatus.BAD_REQUEST);
+
+}
   }
 
   @Delete(':document')
@@ -59,7 +68,7 @@ export class PlanetsController {
 
       } catch (error) {
             return new HttpException(
-              new Result('User could not be added',
+              new Result('Planet could not be deleted',
                                     false,
                                     null,
                                     error),

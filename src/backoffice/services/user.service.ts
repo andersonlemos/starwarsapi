@@ -12,14 +12,21 @@ export class UserService {
     return await user.save();
   }
 
-  async find(document): Promise<User[]>  {
+  async findById(document): Promise<User[]>  {
     return await this.model
-                     .find({id: document}, 'username active roles')
+                     .find({_id: document}, '-password')
                      .exec();
   }
 
-  async remove(data: User): Promise<User> {
-    const user = new this.model(data);
-    return await user.remove();
+ async findByName(document): Promise<User> {
+   return await this.model
+                    .find({username: document}, '-password')
+                    .exec();
+ }
+
+  async remove(document): Promise<User> {
+    return await this.model
+                     .remove({_id: document}, '-password')
+                     .exec();
   }
 }

@@ -9,27 +9,28 @@ import { User } from '../models/user.model';
 @Controller('v1/users')
 export class UsersController {
 
-  constructor(private readonly accountService: UserService) {
+  constructor(private readonly userService: UserService) {
 
   }
 
   @Get(':document')
-  getById(@Param('document') document: string) {
-    return new Result(null, true, {}, null);
+  async getById(@Param('document') document: string) {
+    const user = await this.userService.findById(document);
+    return new Result(null, true, user, null);
   }
 
-  @Get('/find/:document')
-  getByName(@Param('document') document: string) {
-    return new Result(null, true, {}, null);
+  @Get('/find/:name')
+  async getByName(@Param('name') name: string) {
+    const user = await this.userService.findByName(name);
+    return new Result(null, true, user, null);
   }
 
   @Post()
   @UseInterceptors(new ValidatorInterceptor(new CreateUserContract()))
   async post(@Body() model: CreateUserDto) {
-
     try {
 
-      const user = await this.accountService
+      const user = await this.userService
                            .create(
                               new User(
                                 model.username,
@@ -38,7 +39,7 @@ export class UsersController {
                                 model.roles,
                               ));
 
-      return new Result('User successfully added', true, {name:[user.username, user.roles, user.active]}, null);
+      return new Result('User successfully added', true, user, null);
     } catch (error) {
 
       return new HttpException(
@@ -53,8 +54,21 @@ export class UsersController {
   }
 
   @Delete(':document')
-  delete(@Param('document') document: string) {
-    return new Result('User successfully removed', true, document, null);
+  async delete(@Param('document') document: string) {
+    try {
+
+      const user = await this.userService.remove(document);
+      return new Result('User successfully removed!', true, user, null);
+
+    } catch (error) {
+          return new HttpException(
+            new Result('User could not be deleted',
+                                  false,
+                                  null,
+                                  error),
+                HttpStatus.BAD_REQUEST);
+
+    }
   }
 
 }

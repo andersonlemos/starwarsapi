@@ -36,15 +36,15 @@ export class PlanetService {
                      .exec();
   }
 
-  async query(model: QueryDto): Promise<Planet[]> {
+  async query(document: QueryDto): Promise<Planet[]> {
     return await this.model
-                     .find(model.query,
-                      model.fields,
+                     .find(document.query,
+                      document.fields,
                       {
-                        skip: model.skip,
-                        limit: model.take,
+                        skip: Number(document.skip),
+                        limit: Number(document.take),
                       })
-                     .sort(model.sort)
+                     .sort(document.sort)
                      .exec();
 
   }

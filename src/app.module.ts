@@ -4,7 +4,7 @@ import { BackofficeModule } from './backoffice/backoffice.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/starwarsapi', {
+    MongooseModule.forRoot("mongodb://localhost/starwarsapi" ,{
       useCreateIndex: true,
       useNewUrlParser: true,
     }),

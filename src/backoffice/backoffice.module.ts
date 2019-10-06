@@ -4,7 +4,6 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 
 import { AccountController } from './controllers/account.controller';
-import { UserController } from './controllers/user.controller';
 import { PlanetController } from './controllers/planet.controller';
 
 import { PlanetSchema } from './schemas/planet.schema';
@@ -15,12 +14,13 @@ import { PlanetService } from './services/planet.service';
 
 import { AuthService } from '../shared/services/auth.service';
 import { JwtStrategy } from '../shared/strategies/jwt.strategy';
+import { environment } from '../utils/environment';
 
 @Module({
   imports: [
     PassportModule.register({defaultStrategy: 'jwt'}),
     JwtModule.register({
-      secretOrPrivateKey: 'secret',
+      secretOrPrivateKey: environment.SECRET_KEY.toString(),
       signOptions: {
         expiresIn: 3600,
       },
@@ -39,7 +39,6 @@ import { JwtStrategy } from '../shared/strategies/jwt.strategy';
   controllers: [
     AccountController,
     PlanetController,
-    UserController,
   ],
   providers: [
     AccountService,

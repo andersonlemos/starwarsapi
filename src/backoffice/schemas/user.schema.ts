@@ -18,6 +18,6 @@ export const UserSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: true,
-  },
-  roles: [{type: String}],
-});
+  }},
+  { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } },
+  );

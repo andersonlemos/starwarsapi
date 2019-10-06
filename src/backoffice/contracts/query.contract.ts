@@ -11,8 +11,8 @@ export class QueryContract implements Contract {
   validate(model: QueryDto): boolean {
     const flunt = new Flunt();
 
-    flunt.isGreaterThan(model.take, environment.quantityOfRecords,  `Take can not return more than ${environment.quantityOfRecords} records!`);
-    flunt.isGreaterThan(model.skip, environment.skipLimit, `Skip can not be greather than ${environment.skipLimit} records!`);
+    flunt.isGreaterThan(model.take, environment.QUANTITY_OF_RECORDS,  `Take can not return more than ${environment.QUANTITY_OF_RECORDS} records!`);
+    flunt.isGreaterThan(model.skip, environment.SKIP_LIMIT, `Skip can not be greather than ${environment.SKIP_LIMIT} records!`);
 
     this.errors = flunt.errors;
 

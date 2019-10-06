@@ -11,19 +11,14 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createToken() {
-    const user: JwtPayload = {
-      document: '5d978630688a177452564529',
-      roles: ['admin', 'dev'],
-    };
-    const accessToken = this.jwtService.sign(user);
-    return {
-      expiresIn: 3600,
-      accessToken,
-    };
+  async createToken(username: string) {
+    const user: JwtPayload = {username};
+
+    return this.jwtService.sign(user);
+
   }
   async validateUser(payload: JwtPayload): Promise<any> {
-    return await this.accountService.findById(payload.document);
+    return payload;
   }
 
 }

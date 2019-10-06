@@ -11,8 +11,7 @@ import { ValidatorInterceptor } from '../../interceptors/validator.interceptor';
 import { CreateUserContract } from '../contracts/user.contract';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { User } from '../models/user.model';
-import { environment } from '../../utils/environment';
-import { Md5 } from 'md5-typescript';
+import { RoleInterceptor } from '../../shared/interceptors/role.interceptor';
 
 @Controller('v1/accounts')
 export class AccountController {
@@ -33,7 +32,7 @@ export class AccountController {
           throw new HttpException(new ResultDto('User inactive', false, null, null), HttpStatus.UNAUTHORIZED);
       }
 
-     const token = await this.authService.createToken(account.username);
+     const token = await this.authService.createToken(account.username, account.roles);
      return new ResultDto(null, true, token, null);
   }
 
@@ -42,7 +41,6 @@ export class AccountController {
   @UseInterceptors(new ValidatorInterceptor(new CreateUserContract()))
   async post(@Body() model: CreateUserDto) {
     try {
-      //const password = await Md5.init(`${model.password}${environment.SALT_KEY}`);
 
       const user = await this.accountService
                            .create(
@@ -50,6 +48,7 @@ export class AccountController {
                                 model.username,
                                 model.password,
                                 model.active,
+                                model.roles,
                               ));
 
       return new Result('User successfully added', true, [user.username, user.active], null);
@@ -97,7 +96,7 @@ export class AccountController {
   @Post('refresh')
   @UseGuards(JwtAuthGuard)
   async refreshToken(@Req() request): Promise<any> {
-    const token = await this.authService.createToken(request.username);
+    const token = await this.authService.createToken(request.username, request.roles);
     return new ResultDto(null, true, token, null);
   }
 

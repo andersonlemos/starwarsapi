@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
@@ -18,6 +18,10 @@ import { environment } from '../utils/environment';
 
 @Module({
   imports: [
+    CacheModule.register({
+      ttl: Number(environment.CACHE_SECONDS),
+      max: Number(environment.CACHE_OBJECTS),
+    }),
     PassportModule.register({defaultStrategy: 'jwt'}),
     JwtModule.register({
       secretOrPrivateKey: environment.SECRET_KEY.toString(),

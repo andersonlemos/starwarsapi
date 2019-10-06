@@ -2,7 +2,10 @@ import { Controller,
          Get, Post, Put, Delete,
          Param, Body, UseInterceptors,
          HttpException, HttpStatus,
-         Query } from '@nestjs/common';
+         Query, 
+         UseGuards,
+         Req,
+         CacheInterceptor} from '@nestjs/common';
 
 import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../../interceptors/validator.interceptor';
@@ -11,6 +14,8 @@ import { CreatePlanetDto } from '../dtos/create-planet.dto';
 import { PlanetService } from '../services/planet.service';
 import { Planet } from '../models/planet.model';
 import { QueryDto } from '../dtos/query.dto';
+import { JwtAuthGuard } from '../../shared/guards/auth.guard';
+import { RoleInterceptor } from '../../shared/interceptors/role.interceptor';
 
 @Controller('v1/planets')
 export class PlanetController {
@@ -20,6 +25,8 @@ export class PlanetController {
   }
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
+  // @UseInterceptors(new RoleInterceptor(['user']))
   async get(@Query() options: QueryDto) {
       const planets = await this.planetService.query(options);
       return new Result(null, true,  planets, null);

@@ -29,7 +29,8 @@ export class AccountService {
     const password = await Md5.init(`${model.password}${environment.SALT_KEY}`);
     const user = new this.userModel(new User(model.username,
                                              password,
-                                             model.active));
+                                             model.active,
+                                             model.roles));
     return await user.save();
   }
 

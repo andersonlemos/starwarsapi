@@ -14,7 +14,7 @@ import { PlanetService } from './services/planet.service';
 
 import { AuthService } from '../shared/services/auth.service';
 import { JwtStrategy } from '../shared/strategies/jwt.strategy';
-import { environment } from '../utils/environment';
+import { environment } from '../environment';
 
 @Module({
   imports: [

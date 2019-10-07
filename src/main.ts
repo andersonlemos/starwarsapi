@@ -1,16 +1,25 @@
 import { NestFactory } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import * as rateLimit from 'express-rate-limit';
 import * as compression from 'compression';
 import * as helmet from 'helmet';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { environment } from './environment';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-      logger: console,
+      logger: [ 'error', 'warn' ],
     },
 
   );
   app.enableCors();
+
+  app.use(rateLimit({
+    windowMs: environment.MAX_RATE_SECONDS,
+    max : environment.MAX_RATE_LIMIT,
+    message: environment.RATE_MESSAGE,
+  }));
+
   app.use(helmet());
   app.use(compression());
 

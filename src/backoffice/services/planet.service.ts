@@ -3,7 +3,7 @@ import { Injectable, HttpService } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Planet } from '../models/planet.model';
 import { QueryDto } from '../dtos/query.dto';
-import { environment } from '../../utils/environment';
+import { environment } from '../../environment';
 @Injectable()
 export class PlanetService {
   constructor(

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from '../models/user.model';
 import { Md5 } from 'md5-typescript';
-import { environment } from '../../utils/environment';
+import { environment } from '../../environment';
 @Injectable()
 export class AccountService {
   constructor(

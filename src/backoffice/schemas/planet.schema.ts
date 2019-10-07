@@ -19,9 +19,13 @@ export const PlanetSchema = new mongoose.Schema ({
     required: true,
     trim: true,
   },
-  moviesAppearances: {
+  countMoviesAppearances: {
     type: Number,
     required: false,
     default: 0,
   },
+  moviesAppearances: [{
+    type: String,
+    required: false,
+  }],
 });

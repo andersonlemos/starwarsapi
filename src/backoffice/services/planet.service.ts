@@ -1,11 +1,15 @@
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Planet } from '../models/planet.model';
 import { QueryDto } from '../dtos/query.dto';
+import { environment } from '../../utils/environment';
 @Injectable()
 export class PlanetService {
-  constructor(@InjectModel('Planet') private readonly model: Model<Planet>) {}
+  constructor(
+    @InjectModel('Planet') private readonly model: Model<Planet>,
+    private readonly httpService: HttpService
+    ) {}
 
   async create(data: Planet): Promise<Planet> {
     const planet = new this.model(data);
@@ -47,6 +51,12 @@ export class PlanetService {
                      .sort(document.sort)
                      .exec();
 
+  }
+
+  getFilms(document: string) {
+    const url = `${environment.SWAPI_URL}/planets/?search=${document}`;
+
+    return this.httpService.get(url);
   }
 
 }

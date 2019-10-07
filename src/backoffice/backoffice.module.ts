@@ -1,4 +1,4 @@
-import { Module, CacheModule } from '@nestjs/common';
+import { Module, CacheModule, HttpModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
@@ -18,6 +18,7 @@ import { environment } from '../utils/environment';
 
 @Module({
   imports: [
+    HttpModule,
     CacheModule.register({
       ttl: Number(environment.CACHE_SECONDS),
       max: Number(environment.CACHE_OBJECTS),

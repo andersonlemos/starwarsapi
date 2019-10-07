@@ -1,7 +1,16 @@
+import { ApiModelProperty } from '@nestjs/swagger';
+
 export class AuthenticateDto {
-  constructor(
-    public username: string,
-    public password: string,
-    public active: boolean,
-  ) { }
+  @ApiModelProperty(  )
+  public username: string;
+  @ApiModelProperty(  )
+  public password: string;
+   constructor(
+    username,
+    password,
+    ) {
+  this.username = username;
+  this.password = password;
+  }
+
 }

@@ -1,9 +1,20 @@
+import { ApiModelProperty } from "@nestjs/swagger";
 
 export class CreateUserDto {
+  @ApiModelProperty(  )
+  public username: string;
+  @ApiModelProperty(  )
+  public password: string;
+  @ApiModelProperty(  )
+  public active: boolean;
+
   constructor(
-    public username: string,
-    public password: string,
-    public active: boolean,
-    public roles: string[],
-   ) {}
+    username,
+    password,
+    active,
+  ) {
+  this.username = username;
+  this.password = password;
+  this.active = active;
+  }
 }

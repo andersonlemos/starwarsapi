@@ -1,10 +1,9 @@
 import { Controller,
-         Get, Post, Put, Delete,
+         Get, Post, Delete,
          Param, Body, UseInterceptors,
          HttpException, HttpStatus,
          Query, 
          UseGuards,
-         Req,
          CacheInterceptor} from '@nestjs/common';
 
 import { Result } from '../models/result.model';
@@ -15,7 +14,6 @@ import { PlanetService } from '../services/planet.service';
 import { Planet } from '../models/planet.model';
 import { QueryDto } from '../dtos/query.dto';
 import { JwtAuthGuard } from '../../shared/guards/auth.guard';
-import { RoleInterceptor } from '../../shared/interceptors/role.interceptor';
 
 @Controller('v1/planets')
 export class PlanetController {
@@ -23,38 +21,49 @@ export class PlanetController {
   constructor(private readonly planetService: PlanetService) {
 
   }
-
+ 
   @Get()
   @UseInterceptors(CacheInterceptor)
-  // @UseInterceptors(new RoleInterceptor(['user']))
   async get(@Query() options: QueryDto) {
       const planets = await this.planetService.query(options);
       return new Result(null, true,  planets, null);
   }
 
-  @Get(':document')
-  async getById(@Param('document') document: string) {
-    const planet = await this.planetService.findById(document);
+  @Get(':planetId')
+  async getById(@Param('planetId') planetId: string) {
+    const planet = await this.planetService.findById(planetId);
     return new Result(null, true, planet, null);
   }
 
-  @Get('/name/:document')
-  async getByName(@Param('document') document: string) {
-    const planet = await this.planetService.findByName(document);
+  @Get('/name/:planetName')
+  async getByName(@Param('planetName') planetName: string) {
+    const planet = await this.planetService.findByName(planetName);
     return new Result(null, true, planet, null);
   }
 
   @Post()
   @UseInterceptors(new ValidatorInterceptor(new CreatePlanetContract()))
   async post(@Body() model: CreatePlanetDto) {
+
     try {
+      let countAppearances: number = 0;
+      let appearences: any[];
+
+      const swapi = await this.planetService.getFilms(model.name).toPromise();
+
+      if (swapi.data.count > 0) {
+        appearences = swapi.data.results[0].films;
+        countAppearances = appearences.length;
+      }
+
       const planet = await this.planetService
                               .create(
                                 new Planet(
                                   model.name,
                                   model.climate,
                                   model.ground,
-                                  model.moviesAppearances,
+                                  countAppearances,
+                                  appearences,
                                 ));
       return new Result('Planet successfully added!', true, planet, null);
   } catch (error) {
@@ -68,11 +77,11 @@ export class PlanetController {
 }
   }
 
-  @Delete(':document')
-  async delete(@Param('document') document: string) {
+  @Delete(':planetId')
+  async delete(@Param('planetId') planetId: string) {
       try {
 
-        const planet = await this.planetService.remove(document);
+        const planet = await this.planetService.remove(planetId);
         return new Result('Planet successfully removed!', true, planet, null);
 
       } catch (error) {

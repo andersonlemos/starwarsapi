@@ -11,8 +11,6 @@ import { ValidatorInterceptor } from '../../interceptors/validator.interceptor';
 import { CreateUserContract } from '../contracts/user.contract';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { User } from '../models/user.model';
-import { RoleInterceptor } from '../../shared/interceptors/role.interceptor';
-
 @Controller('v1/accounts')
 export class AccountController {
   constructor(
@@ -32,7 +30,7 @@ export class AccountController {
           throw new HttpException(new ResultDto('User inactive', false, null, null), HttpStatus.UNAUTHORIZED);
       }
 
-     const token = await this.authService.createToken(account.username, account.roles);
+     const token = await this.authService.createToken(account.username);
      return new ResultDto(null, true, token, null);
   }
 
@@ -47,8 +45,7 @@ export class AccountController {
                               new User(
                                 model.username,
                                 model.password,
-                                model.active,
-                                model.roles,
+                                model.active
                               ));
 
       return new Result('User successfully added', true, [user.username, user.active], null);
@@ -65,11 +62,11 @@ export class AccountController {
 
   }
 
-  @Delete(':document')
-  async delete(@Param('document') document: string) {
+  @Delete(':accountId')
+  async delete(@Param('accountId') accountId: string) {
     try {
 
-      const user: any = await this.accountService.remove(document);
+      const user: any = await this.accountService.remove(accountId);
 
       if (user.deletedCount === 0) {
         return new HttpException(
@@ -96,7 +93,7 @@ export class AccountController {
   @Post('refresh')
   @UseGuards(JwtAuthGuard)
   async refreshToken(@Req() request): Promise<any> {
-    const token = await this.authService.createToken(request.username, request.roles);
+    const token = await this.authService.createToken(request.username);
     return new ResultDto(null, true, token, null);
   }
 

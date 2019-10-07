@@ -3,6 +3,7 @@ export class Planet {
       public name: string,
       public climate: string,
       public ground: string,
-      public moviesAppearances: number,
-    ) {}
+      public countMoviesAppearances: number,
+      public moviesAppearances: string[],
+   ) {}
 }

@@ -17,7 +17,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --watch --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^6.7.2",
@@ -31,11 +31,13 @@
     "compression": "^1.7.4",
     "express-rate-limit": "^5.0.0",
     "helmet": "^3.21.1",
+    "jwt-decode": "^2.2.0",
     "md5-typescript": "^1.0.5",
     "mongoose": "^5.7.3",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
@@ -48,6 +50,8 @@
     "@types/express": "^4.17.1",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.5",
+    "@types/passport-jwt": "^3.0.2",
+    "@types/passport-local": "^1.0.33",
     "@types/supertest": "^2.0.8",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",

@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable, HttpService, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Planet } from '../models/planet.model';
 import { QueryDto } from '../dtos/query.dto';
@@ -22,21 +22,22 @@ export class PlanetService {
                      .sort('name')
                      .exec();
   }
-  async findById(document): Promise<Planet[]>  {
+  async findById(document): Promise<Planet>  {
+    
     return await this.model
-                     .find({_id: document}, 'name climate ground moviesAppearances')
+                     .findOne({_id: document}, 'name climate ground moviesAppearances')
                      .exec();
   }
 
-  async findByName(document): Promise<Planet[]>  {
-    return await this.model
+  async findByName(document): Promise<Planet>  {
+     return await this.model
                      .find({name: document}, 'name climate ground moviesAppearances')
                      .exec();
   }
 
-  async remove(document): Promise<Planet[]>  {
-    return await this.model
-                     .remove({_id: document})
+  async remove(document): Promise<Planet>  {
+      return await this.model
+                     .deleteOne({_id: document})
                      .exec();
   }
 
@@ -54,6 +55,7 @@ export class PlanetService {
   }
 
   getFilms(document: string) {
+    
     const url = `${environment.SWAPI_URL}/planets/?search=${document}`;
 
     return this.httpService.get(url);

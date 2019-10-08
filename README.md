@@ -1,75 +1,55 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Starwars Api #
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este projeto consiste em uma simples api para cadastros de planetas.
+Possui integração com a [SWAPI - The Star Wars API](https://swapi.co/), obtendo automaticamente no momento do cadastro, a quantidade de filmes que o planeta é citado.
 
-## Description
+## Tecnologia Utilizada ##
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+* [NestJs](https://nestjs.com/)
+* [MongoDb](https://www.mongodb.com/)
 
-## Installation
+## Pré-requisitos ##
 
-```bash
-$ npm install
-```
+* [NPM](https://www.npmjs.com/)
+* [Typescript](https://www.typescriptlang.org/)
+* [GIT](https://git-scm.com/)
+* [MongoDb](https://www.mongodb.com/) - (_executando na porta padrão 27017_)
 
-## Running the app
+## Instalação ##
 
-```bash
-# development
-$ npm run start
+Se já possui os pacotes necessários instalados,
+clone o projeto do repositório.
 
-# watch mode
-$ npm run start:dev
+    git clone https://github.com/andersonlemos/starwars.git
 
-# production mode
-$ npm run start:prod
-```
+Caso contrário instale primeiramente os pacotes necessários conforme configuração sugerida em suas documentações.
 
-## Test
+Após clonar o projeto, entre na pasta da solução e execute o comando:
 
-```bash
-# unit tests
-$ npm run test
+    npm install
 
-# e2e tests
-$ npm run test:e2e
+Isso efetuará o download e a instalação dos pacotes necessários para o seu funcionamento.
 
-# test coverage
-$ npm run test:cov
-```
+### Preview ###
 
-## Support
+Endpoints:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+    GET         /planets                       async get(@Query()  options: QueryDto) 
+    GET         /planets/:planetid             async getById(@Param('planetId') planetId: string)
+    GET         /planets/name/:planetName      async getByName(@Param('planetName') planetName: string)
+    POST        /planets                       async post(@Body() model: CreatePlanetDto)
+    DELETE      /planets/:planetId             async delete(@Param('planetId') planetId: string)
 
-## Stay in touch
+Se quisermos paginar os resultados, estão disponíveis as opções, skip, take e sort.
+Onde:
+- *Skip*: pula a quantidade de registros informada
+- *Take*: retorna a quantidade de registros informada
+- *Sort*: ordena os resultados pelo campo informado
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Exemplos:
 
-## License
+    planets/?skip=2
+    planets/?take=1
+    planets/?sort=+name
+    planets/?sort=-name
 
-  Nest is [MIT licensed](LICENSE).

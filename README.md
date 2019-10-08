@@ -30,15 +30,25 @@ Após clonar o projeto, entre na pasta da solução e execute o comando:
 
 Isso efetuará o download e a instalação dos pacotes necessários para o seu funcionamento.
 
+Concluída a instalação é hora de executar a aplicação.
+Execute:
+
+    npm run start:dev       Inicia opções de desenvolvimento carregamento da aplicação, sempre que um arquivo for alterado
+    npm run start:prod      Inicia a apliação somente com os logs de console.
+    npm run test:e2e        Compila o arquivo app.e2e-spec.ts da pasta /test e inicia um teste básico das rotas. 
+
+
 ### Preview ###
+
+Por padrão a aplicação está disponível em http://localhost:3000/v1/planets mas isso pode ser alterado no arquivo  _environments.ts_ no diretório raiz.
 
 Endpoints:
 
-    GET         /planets                       async get(@Query()  options: QueryDto) 
-    GET         /planets/:planetid             async getById(@Param('planetId') planetId: string)
-    GET         /planets/name/:planetName      async getByName(@Param('planetName') planetName: string)
-    POST        /planets                       async post(@Body() model: CreatePlanetDto)
-    DELETE      /planets/:planetId             async delete(@Param('planetId') planetId: string)
+    GET         v1/planets                       async get(@Query()  options: QueryDto) 
+    GET         v1/planets/:planetid             async getById(@Param('planetId') planetId: string)
+    GET         v1/planets/name/:planetName      async getByName(@Param('planetName') planetName: string)
+    POST        v1/planets                       async post(@Body() model: CreatePlanetDto)
+    DELETE      v1/planets/:planetId             async delete(@Param('planetId') planetId: string)
 
 Se quisermos paginar os resultados, estão disponíveis as opções, skip, take e sort.
 Onde:
@@ -52,4 +62,7 @@ Exemplos:
     planets/?take=1
     planets/?sort=+name
     planets/?sort=-name
+
+Documentação das rotas disponível também em http://localhost:3000/docs
+
 

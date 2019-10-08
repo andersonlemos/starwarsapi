@@ -1,5 +1,6 @@
 // tslint:disable-next-line: one-variable-per-declaration
 export enum environment  {
+  DEFAULT_PORT = 3000,
   SWAPI_URL = 'https://swapi.co/api',
   MONGODB_CONNECTIONSTRING = 'mongodb://localhost:27017/starwarsapi',
   COUNT_OF_RECORDS = 50,

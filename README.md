@@ -10,6 +10,7 @@ Possui integração com a [SWAPI - The Star Wars API](https://swapi.co/), obtend
 
 ## Pré-requisitos ##
 
+* [NODEJS](https://nodejs.org/en/)
 * [NPM](https://www.npmjs.com/)
 * [Typescript](https://www.typescriptlang.org/)
 * [GIT](https://git-scm.com/)

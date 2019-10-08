@@ -21,7 +21,7 @@ Possui integração com a [SWAPI - The Star Wars API](https://swapi.co/), obtend
 Se já possui os pacotes necessários instalados,
 clone o projeto do repositório.
 
-    git clone https://github.com/andersonlemos/starwars.git
+    git clone https://github.com/andersonlemos/starwarsapi.git
 
 Caso contrário instale primeiramente os pacotes necessários conforme configuração sugerida em suas documentações.
 

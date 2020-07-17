@@ -4,7 +4,5 @@ export class ResultDto {
       public success: boolean,
       public data: any,
       public errors: any,
-  ) {
-
-  }
+  ) {}
 }

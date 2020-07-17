@@ -3,10 +3,7 @@ import { Controller,
          Param, Body, UseInterceptors,
          HttpException, HttpStatus,
          Query,
-         CacheInterceptor,
-         UseGuards,
-         Req,
-         Request} from '@nestjs/common';
+         CacheInterceptor, Injectable, Inject} from '@nestjs/common';
 import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../../interceptors/validator.interceptor';
 import { CreatePlanetDto } from '../dtos/create-planet.dto';
@@ -16,10 +13,10 @@ import { QueryDto } from '../dtos/query.dto';
 import { CreatePlanetContract } from '../contracts/create-planet.contract';
 
 @Controller('v1/planets')
-export class PlanetController {
+export class PlanetsController {
 
   constructor(
-     private readonly planetService: PlanetService,
+    @Inject(PlanetService) private readonly planetService: PlanetService,
   ) { }
 
   @Get()
@@ -81,8 +78,8 @@ export class PlanetController {
         return new Result('Planet successfully added!', true, planet, null);
       }
 
-    } catch (error) {
-       return new HttpException('Planet could not be added', HttpStatus.BAD_REQUEST);
+     } catch (error) {
+        return new HttpException('Planet could not be added', HttpStatus.BAD_REQUEST);
     }
   }
 

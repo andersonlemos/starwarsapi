@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Contract } from './contract';
-import { Flunt } from '../../utils/flunt';
+import { Flunt } from '../../validators/flunt';
 import { QueryDto } from '../dtos/query.dto';
-import { environment } from '../../environment';
-
 @Injectable()
 export class QueryContract implements Contract {
   errors: any[];
@@ -12,11 +10,11 @@ export class QueryContract implements Contract {
     const flunt = new Flunt();
 
     flunt.isGreaterThan(model.take,
-          environment.COUNT_OF_RECORDS,
-          `Take can not return more than ${environment.COUNT_OF_RECORDS} records!`);
+          process.env.COUNT_OF_RECORDS,
+          `Take can not return more than ${process.env.COUNT_OF_RECORDS} records!`);
     flunt.isGreaterThan(model.skip,
-          environment.SKIP_LIMIT,
-          `Skip can not be greather than ${environment.SKIP_LIMIT} records!`);
+          process.env.SKIP_LIMIT,
+          `Skip can not be greather than ${process.env.SKIP_LIMIT} records!`);
 
     this.errors = flunt.errors;
 

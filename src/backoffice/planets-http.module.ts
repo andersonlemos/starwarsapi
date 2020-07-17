@@ -2,6 +2,7 @@ import { CacheModule, HttpModule,Module } from '@nestjs/common';
 import { PlanetsModule } from './planets.module';
 import { PlanetsController } from './controllers/planet.controller';
 import { PlanetService } from './services/planet.service';
+import { PlanetSubscriber } from './planteSubscriber';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { PlanetService } from './services/planet.service';
           }),
     PlanetsModule
   ],
-  providers: [PlanetService],
+  providers: [PlanetService, PlanetSubscriber],
   controllers: [PlanetsController]
 })
 export class PlanetsHttpModule {}

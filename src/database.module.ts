@@ -9,7 +9,7 @@ import { Planets } from "./backoffice/entities/planet.entity";
             host: "127.0.0.1",
             port: 27017,
             database: "starwars",
-            entities: [Planets],
+            entities: [__dirname + '/**/*.entity{.ts,.js}'],
             synchronize: true
         })
     ]

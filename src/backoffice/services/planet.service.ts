@@ -1,63 +1,48 @@
-import { Injectable, HttpService } from '@nestjs/common';
-import { QueryDto } from '../dtos/query.dto';
-import { Planets } from '../entities/planet.entity';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreatePlanetDto } from '../dtos/create-planet.dto';
+import { RepositoryBase } from './repositoryBase.interface.';
+import { Planets } from '../entities/planet.entity';
+
 @Injectable()
-export class PlanetService {
-  constructor(
-    @InjectRepository(Planets) private readonly planetsRepository: Repository<Planets>,
-    private readonly httpService: HttpService
-    ) {}
+export class PlanetService implements RepositoryBase<Planets> {
+    private readonly _planetsRepository: Repository<Planets>;
+    constructor(
+        @InjectRepository(Planets)
+        private readonly planetsRepository: Repository<Planets>,
+    ) {
+        this._planetsRepository = planetsRepository;
+    }
 
-  async create(data: CreatePlanetDto): Promise<Planets> {
-    return await this.planetsRepository.save(data);
-  }
+    async update(model: Planets): Promise<number> {
+        const result = await this._planetsRepository.update(model.id, {
+            name: model.name,
+            terrain: model.terrain,
+            climate: model.climate,
+            countMoviesAppearances: model.countMoviesAppearances,
+            moviesAppearances: model.moviesAppearances,
+        });
+        return result.affected;
+    }
 
-  async findAll(): Promise<Planets[]>  {
-    return await this.planetsRepository.find()
-  }
-  async findById(id): Promise<Planets>  {
-    
-    return await this.planetsRepository
-                     .findOne({
-                       where: { 
-                         _id: { $eq:document } 
-                        }
-                      })
-  }
+    async remove(criteria: string): Promise<number> {
+        const result = await this._planetsRepository.delete(criteria);
+        return result.affected;
+    }
 
-  async findByName(name): Promise<Planets>  {
-     return await this.planetsRepository
-                      .findOne({
-                        where: { 
-                          name: { $eq: name } 
-                        }
-                      })
-  }
+    async findById(criteria: string): Promise<Planets> {
+        return await this._planetsRepository.findOne(criteria);
+    }
 
-  async remove(id): Promise<void>  {
-      await this.planetsRepository.delete(id)
-  }
+    async findByName(name: string): Promise<Planets> {
+        return await this._planetsRepository.findOne({ name: name });
+    }
 
-  async query(document: QueryDto): Promise<Planets[]> {
-    return await this.planetsRepository.find()
-                    //  .find(document.query,
-                    //   document.fields,
-                    //   {
-                    //     skip: Number(document.skip),
-                    //     limit: Number(document.take),
-                    //   })
-                    //   .exec();
+    async findAll(): Promise<Planets[]> {
+        return await this._planetsRepository.find();
+    }
 
-  }
-
-  getFilms(document: string) {
-    
-    const url = `${process.env.SWAPI_URL}/planets/?search=${document}`;
-
-    return this.httpService.get(url);
-  }
-
+    async insert(model: Planets): Promise<Planets> {
+        return this._planetsRepository.save(model);
+    }
 }

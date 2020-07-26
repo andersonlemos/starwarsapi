@@ -1,17 +1,16 @@
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { Planets } from "./backoffice/entities/planet.entity";
-
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
-    imports:[
+    imports: [
         TypeOrmModule.forRoot({
-            type: "mongodb",
-            host: "127.0.0.1",
+            type: 'mongodb',
+            host: '127.0.0.1',
             port: 27017,
-            database: "starwars",
+            database: 'starwars',
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
-            synchronize: true
-        })
-    ]
+            synchronize: true,
+            useUnifiedTopology: true,
+        }),
+    ],
 })
 export class Database {}

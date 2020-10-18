@@ -22,6 +22,7 @@ import { SwapiService } from '../services/swapi.service';
 import { Planets } from '../entities/planet.entity';
 import { CreatePlanetDto } from '../dtos/create-planet.dto';
 import { ObjectID } from 'typeorm';
+import { Criteria } from '../services/repositoryBase.interface.';
 
 @Controller('v1/planets')
 export class PlanetsController {
@@ -58,7 +59,7 @@ export class PlanetsController {
     @Get()
     async get() {
         try {
-            return await this._planetService.findAll();
+            return await this._planetService.find(Criteria.All);
         } catch (error) {
             return new HttpException(
                 `:: GET ERROR :: ${error}`,
@@ -96,7 +97,7 @@ export class PlanetsController {
     async getById(@Param('id') id: string) {
         try {
             if (id.toString().match(/^[0-9a-fA-F]{24}$/)) {
-                return await this._planetService.findById(id);
+                return await this._planetService.find(Criteria.byId, id);
             }
         } catch (error) {
             throw new HttpException(
@@ -109,7 +110,7 @@ export class PlanetsController {
     @Get('/name/:name')
     async getByName(@Param('name') name: string) {
         try {
-            return await this._planetService.findByName(name);
+            return await this._planetService.find(Criteria.byName, name);
         } catch (error) {
             throw new HttpException(
                 `:: GET ERROR :: ${error}`,

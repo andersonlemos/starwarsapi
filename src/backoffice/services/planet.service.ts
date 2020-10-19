@@ -35,45 +35,20 @@ export class PlanetService implements RepositoryBase<Planets> {
         criteria: Criteria,
         value?: number | ObjectID | string,
     ): Promise<Planets[] | Planets> {
-        let _result = null;
-
-        switch (criteria) {
-            case Criteria.All:
-                _result = await this._planetsRepository.find();
-                break;
-            case Criteria.byId:
-                _result = await this._planetsRepository.findOne(value);
-                break;
-            case Criteria.byName:
-                _result = await this._planetsRepository.findOne({
-                    name: String(value),
-                });
-                break;
-            default:
-                throw new Error(
-                    'planet.service :: Criteria does not recognized',
-                );
-        }
-        return _result;
+        return await this.findbyCriteria(criteria, value);
     }
-
-    // async findBy(criteria: string): Promise<Planets> {
-    //     return await this._planetsRepository.findOne(criteria);
-    // }
-
-    // async findById(criteria: string): Promise<Planets> {
-    //     return await this._planetsRepository.findOne(criteria);
-    // }
-
-    // async findByName(name: string): Promise<Planets> {
-    //     return await this._planetsRepository.findOne({ name: name });
-    // }
-
-    // async findAll(): Promise<Planets[]> {
-    //     return await this._planetsRepository.find();
-    // }
 
     async insert(model: Planets): Promise<Planets> {
         return this._planetsRepository.save(model);
     }
+
+    findbyCriteria = (criteria: Criteria, value?: any) => {
+        return (
+            {
+                All: this._planetsRepository.find(),
+                byId: this._planetsRepository.findOne(value),
+                byName: this._planetsRepository.findOne({ name: value }),
+            }[Criteria[criteria]] || []
+        );
+    };
 }

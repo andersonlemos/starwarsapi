@@ -10,7 +10,7 @@ export interface RepositoryBase<T> {
     ): Promise<T[] | T>;
 }
 export enum Criteria {
-    All = 0,
-    byName = 1,
-    byId = 2,
+    All = 'All',
+    byName = 'byName',
+    byId = 'byId',
 }

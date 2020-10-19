@@ -42,7 +42,7 @@ export class PlanetService implements RepositoryBase<Planets> {
         return this._planetsRepository.save(model);
     }
 
-    findbyCriteria = (criteria: Criteria, value?: any) => {
+    private findbyCriteria = (criteria: Criteria, value?: any) => {
         return (
             {
                 All: this._planetsRepository.find(),
